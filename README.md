@@ -1,11 +1,14 @@
 # simple lock screen ads
-simple lock screen apps, show ads image and slide to unlock
+simple android lock screen apps, show ads image and slide to unlock
 
 # Config
 Simple configure to add lockscreen in apps, see example in MainActivity
     
     init
         LockScreen.getInstance().init(this);
+
+    init with disable home
+        LockScreen.getInstance().init(this,true);
 
     check is active 
         LockScreen.getInstance().isActive()

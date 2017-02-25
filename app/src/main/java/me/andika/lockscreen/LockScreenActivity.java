@@ -55,6 +55,18 @@ public class LockScreenActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ((LockApplication) getApplication()).lockScreenShow = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((LockApplication) getApplication()).lockScreenShow = false;
+    }
+
+    @Override
     public void onBackPressed() {
         //super.onBackPressed();
     }

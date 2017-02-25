@@ -1,8 +1,15 @@
 package me.andika.lockscreen.utils;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
+
+import java.util.List;
 
 /**
  * Created by andika on 2/19/17.
@@ -11,19 +18,60 @@ import android.content.Intent;
 public class LockScreen {
     private static LockScreen singleton;
     Context context;
+    boolean disableHome=false;
+
+
+    SharedPreferences prefs = null;
 
 
     public static LockScreen getInstance() {
         if(singleton==null){
             singleton = new LockScreen();
+
         }
         return singleton;
     }
     public void init(Context context){
         this.context = context;
+        checkFirstRun();
+
     }
 
+    public void init(Context context, boolean disableHome){
+        this.context = context;
+        this.disableHome = disableHome;
+        checkFirstRun();
+
+    }
+    public void checkFirstRun(){
+        prefs =  this.context.getSharedPreferences("LockScreen", context.MODE_PRIVATE);
+
+        if (prefs.getBoolean("firstrun", true) == true && disableHome==true) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showSettingAccesability();
+                    prefs.edit().putBoolean("firstrun", false).commit();
+                }
+            }, 1000);
+
+
+        }
+    }
+
+    private void showSettingAccesability(){
+        if(!isMyServiceRunning(LockWindowAccessibilityService.class)) {
+            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            context.startActivity(intent);
+        }
+    }
+
+
     public void active(){
+        if(disableHome){
+            showSettingAccesability();
+        }
+
         if(context!=null) {
             context.startService(new Intent(context, LockscreenService.class));
         }
@@ -50,5 +98,7 @@ public class LockScreen {
         }
         return false;
     }
+
+
 
 }
