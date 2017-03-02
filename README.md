@@ -23,3 +23,5 @@ Simple configure to add lockscreen in apps, see example in MainActivity
 ![Preview ](https://raw.githubusercontent.com/SeptiyanAndika/simple-lockscreen-ads/master/preview/setting.png)
 ![Preview ](https://raw.githubusercontent.com/SeptiyanAndika/simple-lockscreen-ads/master/preview/lockscreen.png)
 
+# Sample APK
+[LockScreenTest.apk](https://raw.githubusercontent.com/SeptiyanAndika/simple-lockscreen-ads/master/apk/LockScreenTest.apk)

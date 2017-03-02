@@ -18,7 +18,7 @@ import java.util.List;
 public class LockScreen {
     private static LockScreen singleton;
     Context context;
-    boolean disableHome=false;
+    boolean disableHomeButton=false;
 
 
     SharedPreferences prefs = null;
@@ -33,30 +33,14 @@ public class LockScreen {
     }
     public void init(Context context){
         this.context = context;
-        checkFirstRun();
+
 
     }
 
-    public void init(Context context, boolean disableHome){
+    public void init(Context context, boolean disableHomeButton){
         this.context = context;
-        this.disableHome = disableHome;
-        checkFirstRun();
+        this.disableHomeButton = disableHomeButton;
 
-    }
-    public void checkFirstRun(){
-        prefs =  this.context.getSharedPreferences("LockScreen", context.MODE_PRIVATE);
-
-        if (prefs.getBoolean("firstrun", true) == true && disableHome==true) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showSettingAccesability();
-                    prefs.edit().putBoolean("firstrun", false).commit();
-                }
-            }, 1000);
-
-
-        }
     }
 
     private void showSettingAccesability(){
@@ -68,7 +52,7 @@ public class LockScreen {
 
 
     public void active(){
-        if(disableHome){
+        if(disableHomeButton){
             showSettingAccesability();
         }
 
